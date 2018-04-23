@@ -24,7 +24,6 @@ namespace SocketServer
                         {
                             stream.Write(buff, 0, byteSize);
                         }
-
                     }
                 }
             }
