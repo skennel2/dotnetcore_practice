@@ -10,7 +10,6 @@ namespace SocketServer
 
         static void Main(string[] args)
         {
-            logger.Debug("df");
             new EchoServer().Start();
         }
     }
