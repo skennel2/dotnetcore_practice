@@ -24,6 +24,8 @@ namespace MultiThreadingPractice
             ByteHandle.PrimitiveTypeToByte();
             ByteHandle.StringTypeToByte();
             ByteHandle.ObjectToByte();
+
+            FileHandle.FileCreate();
         }
     }
 }

@@ -8,4 +8,7 @@
   <ItemGroup>
     <Compile Remove="ThreadTest.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="a.dat" />
+  </ItemGroup>
 </Project>
