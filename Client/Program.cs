@@ -17,7 +17,7 @@ namespace Client
         {
             TcpClient client = new TcpClient();
 
-            client.Connect(IPAddress.Loopback, 7000);
+            client.Connect(IPAddress.Loopback, 8181);
 
             using (NetworkStream stream = client.GetStream())
             {

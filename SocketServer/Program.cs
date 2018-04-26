@@ -8,7 +8,8 @@ namespace SocketServer
     {
         static void Main(string[] args)
         {
-            new EchoServer().Start();
+            //new EchoServer().Start();
+            new ChatServer().Run();
         }
     }
 }

@@ -12,20 +12,20 @@ namespace SocketServer
 
         public void Start()
         {
-            TcpListener listener = new TcpListener(IPAddress.Any, 7000);
+            var listener = new TcpListener(IPAddress.Any, 7000);
             listener.Start();
 
             isRunning = true;
 
             while (isRunning)
             {
-                using (TcpClient client = listener.AcceptTcpClient())
-                using (NetworkStream stream = client.GetStream())
+                using (var client = listener.AcceptTcpClient())
+                using (var stream = client.GetStream())
                 using (var reader = new StreamReader(stream, Encoding.UTF8))
                 using (var writer = new StreamWriter(stream, Encoding.UTF8))    
                 {
 
-                    String sendValue = reader.ReadToEnd();
+                    var sendValue = reader.ReadToEnd();
                     writer.WriteLine(sendValue);
 
                     Console.WriteLine(sendValue);
