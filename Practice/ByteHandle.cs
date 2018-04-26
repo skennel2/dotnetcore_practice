@@ -7,9 +7,13 @@ namespace MultiThreadingPractice
 {
     public static class ByteHandle
     {
+        /// <summary>
+        /// BitConverter 클래스로 기본타입을 바이트로 변환한다.
+        /// </summary>
         public static void PrimitiveTypeToByte()
         {
             Console.WriteLine("PrimitiveTypeToByte");
+
             int value = 100;
 
             var bytes = BitConverter.GetBytes(value);
@@ -20,6 +24,9 @@ namespace MultiThreadingPractice
             }
         }
 
+        /// <summary>
+        /// String type을 문자열 인코딩을 통해 바이트로 변환한다.
+        /// </summary>
         public static void StringTypeToByte()
         {
             Console.WriteLine("StringTypeToByte");
@@ -34,6 +41,10 @@ namespace MultiThreadingPractice
             }
         }
 
+        /// <summary>
+        /// 오브젝트를 BinaryFormatter의 직렬화기능으로 바이트변환한다. 
+        /// 변환하려는 클래스 타입에 [Serializable]를 선언해주어야한다.
+        /// </summary>
         public static void ObjectToByte()
         {
             Console.WriteLine("ObjectToByte");
@@ -54,6 +65,10 @@ namespace MultiThreadingPractice
             ByteToObject(bytes);
         }
 
+        /// <summary>
+        /// 직렬화된 바이트를 BinaryFormatter클래스를 이용하여 오브젝트로 변환한다.
+        /// </summary>
+        /// <param name="bytes">Bytes.</param>
         public static void ByteToObject(byte[] bytes)
         {
             Console.WriteLine("ByteToObject");
