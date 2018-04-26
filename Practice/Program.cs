@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,10 +9,17 @@ namespace MultiThreadingPractice
     {
         static void Main(string[] args)
         {
+            // Task 클래스 Api
+            // https://docs.microsoft.com/ko-kr/dotnet/api/system.threading.tasks.task?view=netcore-2.0
+            // public class Task : IAsyncResult, IDisposable
+            // Task 는 값을 반환하지 않는 비동기적 작업을 표현한다. 
+            // Task<TResult> 는 값을 반환하는 비동기적 작업을 표현한다. 
             TaskStaticWay();
             TaskInstanceWay();
+            TaskWithParameter();
             TaskWithReturn();
-            CounterSyncExample();
+            CounterTaskExample();
+            TaskWaitAny();
         }
 
         static void TaskStaticWay()
@@ -19,17 +27,19 @@ namespace MultiThreadingPractice
             Console.WriteLine("TaskStaticWay");
 
             int i = 0;
-            Task.Factory.StartNew(() => { i++; });
-            Task.Factory.StartNew(() => { i++; });
-            Task.Factory.StartNew(() => { i++; });
+            Task t1 = Task.Factory.StartNew(() => { i++; }); // 따로 Thread를 Start시키는 메소드의 호출이 필요없다. 
+            Task t2 = Task.Factory.StartNew(() => { i++; });
+            Task t3 = Task.Factory.StartNew(() => { i++; });
+            Task t4 = Task.Run(() => { i++; }); // 따로 Thread를 Start시키는 메소드의 호출이 필요없다. 
+            //t4.Start();
 
             i++;
-
-            Console.WriteLine(i);
+            //t4.Wait();
+            Console.WriteLine(i); // 1
 
             Thread.Sleep(50);
 
-            Console.WriteLine(i);
+            Console.WriteLine(i); // 5
         }
 
         static void TaskInstanceWay()
@@ -59,6 +69,20 @@ namespace MultiThreadingPractice
             Console.WriteLine(i);
         }
 
+        // 파라미터를 가지는 Task
+        static void TaskWithParameter()
+        {
+            Console.WriteLine("TaskWithParameter");
+            Action<object> action = (o) => 
+            {
+                Console.WriteLine(o.ToString());
+            };
+
+            Task t1 = new Task(action, 123123123);
+            t1.Start();
+        }
+
+        // 제네릭으로 반환값을 가질수 있는 Task
         static void TaskWithReturn()
         {
             Console.WriteLine("TaskWithReturn");
@@ -76,7 +100,8 @@ namespace MultiThreadingPractice
             Console.WriteLine(t1.Result); // 4 ?
         }
 
-        static void CounterSyncExample()
+        // Task, lock 키워드
+        static void CounterTaskExample()
         {
             Console.WriteLine("CounterSyncExample");
 
@@ -93,9 +118,38 @@ namespace MultiThreadingPractice
             t1.Wait();
             t2.Wait();
 
+            // 0 출력 
             Console.WriteLine(counter.Count);
         }
 
+        //     Status of all tasks:
+        //        Task #3: Running
+        //        Task #1: RanToCompletion
+        //        Task #4: Running
+        static void TaskWaitAny()
+        {
+            var tasks = new Task[3];
+            var rnd = new Random();
+            for (int ctr = 0; ctr <= 2; ctr++)
+            {
+                tasks[ctr] = Task.Run( () => Thread.Sleep(rnd.Next(500, 3000)));
+            }
+
+            try 
+            {
+                int index = Task.WaitAny(tasks);
+                Console.WriteLine("Task #{0} completed first.\n", tasks[index].Id);
+                Console.WriteLine("Status of all tasks:");
+                foreach (var t in tasks)
+                {
+                    Console.WriteLine("   Task #{0}: {1}", t.Id, t.Status);
+                }
+            }
+            catch (AggregateException)
+            {
+                Console.WriteLine("An exception occurred.");
+            }
+        }
     }
 
     public class Counter
@@ -125,9 +179,11 @@ namespace MultiThreadingPractice
             int loopCount = LOOP_COUNT;
             while(loopCount--  > 0)
             {
-                lock(lockObject)
+                // 인스턴스의 내부 상태값을 변화 시킨다. 
+                // 여러 스레드에서 경쟁상태가 될수 있기 때문에 lock 으로 묶었다. 
+                lock(lockObject) 
                 {
-                    count++;
+                    count++; 
                 }
                 Console.WriteLine(tName + ":" + count);
                 Thread.Sleep(1);
@@ -140,6 +196,8 @@ namespace MultiThreadingPractice
             int loopCount = LOOP_COUNT;
             while (loopCount-- > 0)
             {
+                // 인스턴스의 내부 상태값을 변화 시킨다. 
+                // 여러 스레드에서 경쟁상태가 될수 있기 때문에 lock 으로 묶었다.                 
                 lock (lockObject)
                 {
                     count--;
