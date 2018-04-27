@@ -105,8 +105,8 @@ namespace MultiThreadingPractice
             Task.Factory.ContinueWhenAll(tasks, completedTasks =>
             {
                 Console.WriteLine("{0} contains: ", docsDirectory);
-                Console.WriteLine("   {0} subdirectories", dirs.Length);
-                Console.WriteLine("   {0} files", files.Length);
+                Console.WriteLine("{0} subdirectories", dirs.Length);
+                Console.WriteLine("{0} files", files.Length);
             });
         }
     }
