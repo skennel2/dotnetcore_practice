@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MultiThreadingPractice
 {
-    class MultiThread
+    public static class MultiThread
     {
         public static void TaskStaticWay()
         {

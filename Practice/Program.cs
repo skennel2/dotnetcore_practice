@@ -29,6 +29,8 @@ namespace MultiThreadingPractice
             StreamHandle.WriteBinaryToFileUsingBinaryWriter();
             StreamHandle.WriteTextToFileUsingStreamWriter();
             StreamHandle.ReadBinaryFromFileUsingBinaryReader();
+
+            JsonSerializeHandle.JsonSerializeAndDeserializeUsingJsonNet();
         }
     }
 }
