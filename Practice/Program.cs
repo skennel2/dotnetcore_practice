@@ -15,6 +15,7 @@ namespace MultiThreadingPractice
             // public class Task : IAsyncResult, IDisposable
             // Task 는 값을 반환하지 않는 비동기적 작업을 표현한다. 
             // Task<TResult> 는 값을 반환하는 비동기적 작업을 표현한다. 
+
             MultiThread.TaskStaticWay();
             MultiThread.TaskInstanceWay();
             MultiThread.TaskWithReturn();
@@ -25,7 +26,8 @@ namespace MultiThreadingPractice
             ByteHandle.StringTypeToByte();
             ByteHandle.ObjectToByte();
 
-            FileHandle.FileCreate();
+            StreamHandle.WriteBinaryToFileUsingBinaryWriter();
+            StreamHandle.WriteTextToFileUsingStreamWriter();
         }
     }
 }

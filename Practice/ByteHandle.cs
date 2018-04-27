@@ -75,7 +75,12 @@ namespace MultiThreadingPractice
             var binaryFormatter = new BinaryFormatter();
             var memoryStream = new MemoryStream();
             memoryStream.Write(bytes, 0, bytes.Length);
-            memoryStream.Seek(0, SeekOrigin.Begin); // 뭔지모르겠당 ....
+
+            // 스트림에서 임의 접근을 위한 Position이라는 프로퍼티가 존재. 
+            // 커서를 이동하는 역할을 하는 메소드
+            memoryStream.Seek(0, SeekOrigin.Begin); 
+            //memoryStream.Position = 0;
+
             var obj = binaryFormatter.Deserialize(memoryStream) as object;
 
             Console.WriteLine(obj);
