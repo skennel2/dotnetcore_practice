@@ -6,6 +6,9 @@ namespace MultiThreadingPractice
 {
     public static class JsonSerializeHandle
     {
+        /// <summary>
+        /// Json.net를 이용한 json직렬화 역직렬화 예제
+        /// </summary>
         public static void JsonSerializeAndDeserializeUsingJsonNet()
         {
             const String filePath = @".\data\j.dat";
